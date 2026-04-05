@@ -1,30 +1,22 @@
-import Sidebar from "@/components/Sidebar";
-import { Geist } from "next/font/google";
+import { Inter } from "next/font/google";
+import "@/app/globals.css";
+// IMPORT DARI SINI
+import { Toaster } from "@/components/ui/sonner";
 
-const geist = Geist({subsets:['latin'],variable:'--font-sans'});
+const inter = Inter({ subsets: ["latin"] });
 
-
-export default function DashboardLayout({
+export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex bg-slate-50 min-h-screen">
-      <Sidebar />
-      <main className="flex-1 p-8">
-        <header className="flex justify-between items-center mb-8">
-          <h2 className="text-2xl font-bold text-slate-800">Panel Manajemen</h2>
-          <div className="flex items-center gap-4 text-sm text-slate-500">
-            <span>
-              Toko ID:{" "}
-              {typeof window !== "undefined" &&
-                localStorage.getItem("store_id")}
-            </span>
-          </div>
-        </header>
+    <html lang="id">
+      <body className={inter.className}>
         {children}
-      </main>
-    </div>
+        {/* TAMBAHKAN INI SEBELUM TUTUP BODY */}
+        <Toaster position="top-right" richColors closeButton />
+      </body>
+    </html>
   );
 }
