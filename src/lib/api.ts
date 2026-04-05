@@ -1,14 +1,17 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://127.0.0.1:8080/api", // URL Backend Go kamu
+  // Mengambil URL dari .env.local
+  baseURL: process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080",
 });
 
-// Interceptor untuk menyisipkan JWT Token secara otomatis
+// Tambahkan interceptor untuk token jika perlu
 api.interceptors.request.use((config) => {
-  const token = localStorage.getItem("token");
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
+  if (typeof window !== "undefined") {
+    const token = localStorage.getItem("token");
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
   }
   return config;
 });
